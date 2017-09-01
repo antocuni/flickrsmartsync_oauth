@@ -202,7 +202,8 @@ class Remote(object):
             # (optional) Set to 1 for Photo, 2 for Screenshot, or 3 for Other
             'content_type': 1,
             # (optional) Set to 1 to keep the photo in global search results, or 2 to hide from public searches
-            'hidden': 2
+            'hidden': 2,
+            'tags': self.get_tags_from_folder(folder),
         }
 
         for i in range(RETRIES):
@@ -214,6 +215,11 @@ class Remote(object):
             except Exception as e:
                 logger.warning("Retrying upload of [%s/%s] after error: [%s]." % (folder, photo, e))
         logger.error("Failed to upload [%s/%s] after %d retries." % (folder, photo, RETRIES))
+
+    def get_tags_from_folder(self, folder):
+        parts = folder.split('/')
+        parts = ['"%s"' % p for p in parts]
+        return ' '.join(parts)
 
     def download(self, url, path):
         folder = os.path.dirname(path)
