@@ -11,7 +11,7 @@ def main():
     setup(name='pysyncr',
           version=VERSION,
           description="Upload, download or sync photos and videos to flickr",
-          long_description=open('README.txt').read(),
+          long_description=open('README.md').read(),
           classifiers=[
               'Development Status :: 3 - Alpha',
               'Environment :: Console',
