@@ -65,9 +65,12 @@ class Remote(object):
         if folder not in self.photo_sets_map:
             photosets_args = self.args.copy()
             custom_title = self.get_custom_set_title(self.cmd_args.sync_path + folder)
+            # in the description, we always store folder as an absolute path
+            # (with a leading '/'), to easily distinguish synced and
+            # non-synced albums
             photosets_args.update({'primary_photo_id': photo_id,
                                    'title': custom_title,
-                                   'description': folder})
+                                   'description': '/' + folder})
             photo_set = json.loads(self.api.photosets_create(**photosets_args))
             self.photo_sets_map[folder] = photo_set['photoset']['id']
             logger.info('Created set [%s] and added photo.' % custom_title)
@@ -165,7 +168,8 @@ class Remote(object):
                     logger.info('Done.')
                     desc = current_set_title
 
-                if desc:
+                if desc and desc.startswith('/'):
+                    desc = desc[1:] # remove the leading /
                     self.photo_sets_map[desc] = current_set['id']
                     title = self.get_custom_set_title(self.cmd_args.sync_path + desc)
                     if self.cmd_args.update_custom_set and title != current_set['title']['_content']:
@@ -178,6 +182,10 @@ class Remote(object):
                         logger.info('Updating custom title to [%s].' % title)
                         json.loads(self.api.photosets_editMeta(**update_args))
                         logger.info('Done.')
+                else:
+                    current_set_title = html_parser.unescape(current_set['title']['_content'])
+                    current_set_title = current_set_title.encode('utf-8') if isinstance(current_set_title, unicode) else current_set_title
+                    logger.info('Ignoring non-synced set (description missing or not starting with /): [%s]' % current_set_title)
 
     def upload(self, file_path, photo, folder):
         upload_args = {
