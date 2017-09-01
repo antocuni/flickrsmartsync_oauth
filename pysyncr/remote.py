@@ -27,35 +27,15 @@ class Remote(object):
         self.update_photo_sets_map()
 
     def auth_api(self):
-	# Store your flickr API key and secret in config.py:
-	#
-	# api_key = u'<API_KEY>'
-	# api_secret = u'<API_SECRET>'
-	#
-        self.api = flickrapi.FlickrAPI(config.api_key, config.api_secret)
+        api_key, api_secret = config.load()
+        self.api = flickrapi.FlickrAPI(api_key, api_secret)
 
         # Authentication
         if not self.api.token_valid(perms=u'delete'):
             print('Authenticating...')
         try:
             self.api.authenticate_via_browser(perms=u'delete')
-            """
-            # Get a request token
-            # self.api.get_request_token(oauth_callback='oob')
-            self.api.get_request_token()
-
-            # Open a browser at the authentication URL.
-            authorize_url = self.api.auth_url(perms=u'delete')
-            webbrowser.open_new_tab(authorize_url)
-
-            # Get the verifier code from the user.
-            verifier = str(input('Please enter verfication code: '))
-
-            # Trade the request token for an access token
-            # added unicode()
-            self.api.get_access_token(unicode(verifier))
-            """
-        except:
+        except Exception:
             logger.error('Authentication is required.')
             exit(0)
 

@@ -15,10 +15,10 @@ Create your own personal Flickr API keys:
 > https://www.flickr.com/services/apps/create/apply
 ```
 
-Add api_key and api_secret to pysyncr/pysyncr/config.py:
+Configure api_key and api_secret in ~/.config/pysyncr.conf
 ```sh
-  api_key = u'<API_KEY>'
-  api_secret = u'<API_SECRET>'
+api_key = your-api-key-without-quotes
+api_secret = your-api-secret
 ```
 
 Run the install script:
