@@ -1,7 +1,7 @@
 import os
 import logging
 
-logger = logging.getLogger("flickrsmartsync_oauth")
+logger = logging.getLogger("pysyncr")
 
 EXT_IMAGE = ('jpg', 'png', 'jpeg', 'gif', 'bmp')
 EXT_VIDEO = ('avi', 'wmv', 'mov', 'mp4', '3gp', 'ogg', 'ogv', 'mts')

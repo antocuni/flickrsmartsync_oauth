@@ -5,7 +5,7 @@ import time
 import logging
 import os
 
-logger = logging.getLogger("flickrsmartsync_oauth")
+logger = logging.getLogger("pysyncr")
 
 class Local(object):
     def __init__(self, cmd_args):

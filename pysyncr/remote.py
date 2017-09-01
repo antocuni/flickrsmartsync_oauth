@@ -8,7 +8,7 @@ import webbrowser
 import logging
 import config
 
-logger = logging.getLogger("flickrsmartsync_oauth")
+logger = logging.getLogger("pysyncr")
 
 # number of retries for downloads
 RETRIES = 10

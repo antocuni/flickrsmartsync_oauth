@@ -11,14 +11,14 @@ from remote import Remote
 version = '0.1.0'
 
 logging.basicConfig()
-logger = logging.getLogger("flickrsmartsync_oauth")
+logger = logging.getLogger("pysyncr")
 hdlr = SysLogHandler()
-formatter = logging.Formatter('flickrsmartsync_oauth %(message)s')
+formatter = logging.Formatter('pysyncr %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 logger.setLevel(logging.INFO)
 
-# flickrsmartsync_oauth.main()
+# pysyncr.main()
 def main():
     parser = argparse.ArgumentParser(description='Sync current folder to your flickr account.')
 
