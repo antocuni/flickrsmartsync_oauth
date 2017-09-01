@@ -100,8 +100,17 @@ class Sync(object):
 
     def download(self):
         # Download to corresponding paths
+        prefix = self.cmd_args.download
+        if not prefix.startswith('/'):
+            logger.error('--download should start with a slash ("/")')
+            sys.exit(1)
+        #
+        # for historical reasons, remote.get_photo_sets() returns path wich
+        # are relative, not absolute. So, we just remove the leading slash
+        # from prefix
+        prefix = prefix[1:]
         for photo_set in self.remote.get_photo_sets():
-            if photo_set and (self.cmd_args.download == '.' or photo_set.startswith(self.cmd_args.download)):
+            if photo_set and photo_set.startswith(prefix):
                 folder = os.path.join(self.cmd_args.sync_path, photo_set)
                 logger.info('Getting photos in set [%s].' % photo_set)
                 photos = self.remote.get_photos_in_set(photo_set, get_url=True)
