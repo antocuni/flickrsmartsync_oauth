@@ -17,6 +17,8 @@ def write_default():
     api_key =
     api_secret =
     """)
+    dir = os.path.dirname(FILENAME)
+    os.makedirs(dir)
     with open(FILENAME, 'w') as f:
         f.write(content)
 
