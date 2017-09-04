@@ -12,11 +12,12 @@ version = '0.1.0'
 
 logging.basicConfig()
 logger = logging.getLogger("pysyncr")
-hdlr = SysLogHandler()
-formatter = logging.Formatter('pysyncr %(message)s')
-hdlr.setFormatter(formatter)
-logger.addHandler(hdlr)
 logger.setLevel(logging.INFO)
+
+root = logging.getLogger()
+hdlr = root.handlers[0]
+fmt = logging.Formatter('[%(levelname)-8s] [%(asctime)s] %(message)s')
+hdlr.setFormatter(fmt)
 
 # pysyncr.main()
 def main():
